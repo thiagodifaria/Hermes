@@ -1,0 +1,61 @@
+{
+  "name": "@hermes/monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Plataforma de Operações Remotas com Gestão Unificada de Infraestrutura",
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "clean": "turbo run clean && rm -rf node_modules .turbo",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "turbo run format",
+    "format:check": "turbo run format:check",
+    "typecheck": "turbo run typecheck",
+    "docker:dev": "docker-compose -f infrastructure/docker/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f infrastructure/docker/docker-compose.yml down",
+    "setup": "pnpm install && pnpm docker:dev && pnpm db:migrate",
+    "db:migrate": "cd packages/database && pnpm migrate",
+    "db:seed": "cd packages/database && pnpm seed",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@types/node": "^20.11.17",
+    "turbo": "^1.12.4",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "keywords": [
+    "ssh",
+    "terminal",
+    "remote-operations",
+    "infrastructure-management",
+    "firewall",
+    "audit",
+    "monorepo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thiagodifaria/Hermes"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Hermes Development Team"
+  }
+}
