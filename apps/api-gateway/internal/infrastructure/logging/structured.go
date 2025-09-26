@@ -24,12 +24,12 @@ const (
 
 // ContextLogger provides structured logging with context
 type ContextLogger struct {
-	logger *zerolog.Logger
+	logger *Logger
 	ctx    context.Context
 }
 
 // NewContextLogger creates a new context logger
-func NewContextLogger(logger *zerolog.Logger, ctx context.Context) *ContextLogger {
+func NewContextLogger(logger *Logger, ctx context.Context) *ContextLogger {
 	return &ContextLogger{
 		logger: logger,
 		ctx:    ctx,
@@ -37,7 +37,7 @@ func NewContextLogger(logger *zerolog.Logger, ctx context.Context) *ContextLogge
 }
 
 // FromContext creates a context logger from context values
-func FromContext(ctx context.Context, logger *zerolog.Logger) *ContextLogger {
+func FromContext(ctx context.Context, logger *Logger) *ContextLogger {
 	contextLogger := &ContextLogger{
 		logger: logger,
 		ctx:    ctx,
