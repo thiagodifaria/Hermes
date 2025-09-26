@@ -8,7 +8,6 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/thiagodifaria/Hermes/apps/api-gateway/internal/domain/entities"
-	"github.com/thiagodifaria/Hermes/apps/api-gateway/internal/domain/valueobjects"
 )
 
 // SessionRepository defines the interface for session persistence operations

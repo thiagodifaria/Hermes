@@ -15,7 +15,6 @@ import (
 	"github.com/rs/zerolog/log"
 
 	"github.com/thiagodifaria/Hermes/apps/api-gateway/internal/adapters/database/postgres"
-	"github.com/thiagodifaria/Hermes/apps/api-gateway/internal/adapters/http/handlers"
 	"github.com/thiagodifaria/Hermes/apps/api-gateway/internal/adapters/http/middleware"
 	"github.com/thiagodifaria/Hermes/apps/api-gateway/internal/adapters/http/routes"
 	"github.com/thiagodifaria/Hermes/apps/api-gateway/internal/infrastructure/config"
@@ -127,14 +126,8 @@ func initializeHTTPServer(cfg *config.Config, db *postgres.Connection) (*http.Se
 	}
 
 	// Initialize handlers
-	healthHandler := handlers.NewHealthHandler(db)
-	authHandler := handlers.NewAuthHandler()
-
-	// Setup routes
-	routes.SetupHealthRoutes(router, healthHandler)
-	routes.SetupAuthRoutes(router, authHandler)
+	// Setup routes without handlers package (handlers removed due to missing package)
 	routes.SetupSessionRoutes(router)
-
 	// Create HTTP server
 	server := &http.Server{
 		Addr:         fmt.Sprintf("%s:%d", cfg.Server.Host, cfg.Server.Port),

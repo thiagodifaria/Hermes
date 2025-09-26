@@ -154,7 +154,7 @@ export const createMockWebSocket = () => {
       }
     },
     simulateClose: (code: number = 1000, reason: string = 'Normal closure') => {
-      mockWebSocket.readyState = WebSocket.CLOSED;
+      (mockWebSocket as any).readyState = WebSocket.CLOSED;
       if (mockWebSocket.onclose) {
         mockWebSocket.onclose({
           code,
@@ -359,7 +359,7 @@ export const createMockDate = (fixedDate: string = '2023-10-01T10:00:00.000Z') =
     if (args.length === 0) {
       return new originalDate(fixedDate);
     }
-    return new originalDate(...args);
+    return new (originalDate as { new(...args: any[]): Date })(...args);
   });
 
   MockDateConstructor.now = vi.fn(() => mockDate.getTime());
@@ -595,7 +595,7 @@ export const setupMockEnvironment = () => {
 
   // Mock fetch globally
   const { mockFetch } = createMockFetch();
-  global.fetch = mockFetch;
+  globalThis.fetch = mockFetch;
 
   return {
     cleanup: () => {

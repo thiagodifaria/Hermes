@@ -577,3 +577,9 @@ type NotificationStats struct {
 	Failed    int64
 	Pending   int64
 }
+
+type DeliveryStatus struct {
+	Status      string
+	DeliveredAt time.Time
+	Error       string
+}

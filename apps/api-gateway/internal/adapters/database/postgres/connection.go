@@ -99,7 +99,6 @@ func (c *Connection) configureConnectionPool(cfg *pgxpool.Config) {
 
 	// Connection settings
 	cfg.ConnConfig.ConnectTimeout = 10 * time.Second
-	cfg.ConnConfig.PreferSimpleProtocol = false
 
 	// Configure SSL mode
 	if c.config.SSLMode != "" {
@@ -247,7 +246,7 @@ func (t *queryTracer) TraceQueryEnd(ctx context.Context, conn *pgx.Conn, data pg
 	duration := time.Since(startTime)
 
 	logEvent := log.Debug().
-		Str("sql", data.SQL).
+		Str("command_tag", data.CommandTag.String()).
 		Dur("duration", duration).
 		Int("rows_affected", int(data.CommandTag.RowsAffected()))
 
@@ -257,8 +256,7 @@ func (t *queryTracer) TraceQueryEnd(ctx context.Context, conn *pgx.Conn, data pg
 
 	// Log slow queries as warnings
 	if duration > 100*time.Millisecond {
-		logEvent = log.Warn().
-			Str("sql", data.SQL).
+		log.Warn().
 			Dur("duration", duration).
 			Msg("slow query detected")
 	}
